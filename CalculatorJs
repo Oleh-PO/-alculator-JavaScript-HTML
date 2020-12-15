@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Текст калькулятора</title>
+</head>
+
+<body>
+	<h1 id = "txt">Калькулятор</h1>
+	<h1 id = "answer">0</h1>
+	<img id = "map" width="400" height="600" src="numbers.png">
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<script>
+		var numberFull = "";
+		$("#map").click(function(event, target) {
+			var numberMeny = "";
+			var finish = 0;
+			var trueword = 0;
+			var diffX = event.offsetX;
+			var diffY = event.offsetY;
+			console.log(diffX + "X " + diffY + "Y");
+			var clear = 0;
+			if (diffX > 0 && diffX < 100 && diffY > 0 && diffY < 145){ //1
+				console.log("1");
+				var word = "1";
+			} else if (diffX > 100 && diffX < 200 && diffY > 0 && diffY < 145){ //2
+				console.log("2");
+				var word = "2";
+			} else if (diffX > 201 && diffX < 300 && diffY > 0 && diffY < 145){ //3
+				console.log("3");
+				var word = "3";
+			} else if (diffX > 301 && diffX < 400 && diffY > 0 && diffY < 150){ //0
+				console.log("0");
+				var word = "0";
+			} else if (diffX > 0 && diffX < 100 && diffY > 125 && diffY < 300){ //4
+				console.log("4");
+				var word = "4";
+			} else if (diffX > 100 && diffX < 200 && diffY > 150 && diffY < 315){ //5
+				console.log("5");
+				var word = "5";
+			} else if (diffX > 210 && diffX < 300 && diffY > 150 && diffY < 310){ //6
+				console.log("6");
+				var word = "6";
+			} else if (diffX > 110 && diffX < 200 && diffY > 450 && diffY < 600){ //"/"
+				console.log("/");
+				var word = "/";
+			} else if (diffX > 0 && diffX < 100 && diffY > 450 && diffY < 600){ //*
+				console.log("*");
+				var word = "*";
+			} else if (diffX > 0 && diffX < 100 && diffY > 310 && diffY < 450){ //7
+				console.log("7");
+				var word = "7";
+			} else if (diffX > 105 && diffX < 200 && diffY > 315 && diffY < 450){ //8
+				console.log("8");
+				var word = "8";
+			} else if (diffX > 200 && diffX < 295 && diffY > 315 && diffY < 445){ //9
+				console.log("9");
+				var word = "9";
+			} else if (diffX > 300 && diffX < 400 && diffY > 150 && diffY < 230){ //-
+				console.log("-");
+				var word = "-";
+			} else if (diffX > 300 && diffX < 400 && diffY > 230 && diffY < 310){ //+
+				console.log("+");
+				var word = "+";
+			}  else if (diffX > 300 && diffX < 400 && diffY > 310 && diffY < 450){ //<--
+				clear++;
+				console.log("<--");
+				var trueword = 1;
+			} else if (diffX > 200 && diffX < 300 && diffY > 450 && diffY < 600){ //&
+				console.log("&");
+				var word = "&";
+			} else if (diffX > 300 && diffX < 400 && diffY > 450 && diffY < 600){ //enter
+				console.log("enter");
+				var trueword = 1;
+				finish ++;
+			} else { //.
+				var word = ".";
+			};
+			if(clear === 1){
+				var del = numberFull.length;
+				del--;
+				for(var p = 0; p < del; p++){
+					numberMeny = numberMeny + numberFull[p];
+				};
+			numberFull = numberMeny;
+			};
+			if (trueword < 1){
+				$("#answer").text(numberFull + word);
+				numberFull = numberFull + word;
+				console.log("trueword " + trueword);
+			} else if (del < 0 || del === 0){
+				$("#answer").text("0");
+			} else {
+				$("#answer").text(numberFull);
+			};
+			console.log(clear);
+			console.log("X" + trueword);
+			console.log(numberFull);
+			console.log(finish);
+			if(finish === 1){
+				for (var j = 0; j < numberFull.length; j++){ // Роспізнання знауів: "+", "-", "*", "/", "& (квадрат числа)"
+				if (numberFull[j] === "+") {
+					var numberLog = "+";
+					var q = j;
+				} else if (numberFull[j] === "-") {
+					var numberLog = "-";
+					var q = j;
+				} else if (numberFull[j] === "*") {
+					var numberLog = "*";
+					var q = j;
+				} else if (numberFull[j] === "/") {
+					var numberLog = "/";
+					var q = j;
+				} else if (numberFull[j] === "&"){
+					var numberLog = "&";
+					var q = j;
+				};
+				if (j === 0){
+					if(numberFull[0] === "-"){
+						var negnumber1 = "-";
+					};
+				} else if (j === q + 1){
+					if(numberFull[q + 1] === "-"){
+						var negnumber2 = "-";
+					};
+				};
+			};
+			var number1 = "";
+			console.log(numberLog);
+			for (var n = 0; n < q; n++) { // Розпізнання першого доданка
+				var wordTrue = number1 + numberFull[n];
+				var number1 = wordTrue;
+				console.log(number1);
+			};
+			q++;
+			var number2 = "";
+			for (var n = q; n < numberFull.length; n++) { // Розпізнання другого доданка
+				var wordTrue2 = number2 + numberFull[n];
+				var number2 = wordTrue2;
+				console.log(number2);
+			};
+			if (negnumber1 === "-") {
+				var number1 = "-"  + number1;
+			} else if (negnumber1 === "-") {
+				var number1 = "-"  + number1;
+			};
+			var numberTrue = number1;
+			var number2 = +number2;
+			var number1 = +number1;
+			if (numberLog === "&"){ // Виконування дії
+				if(number2 > 0){
+					for (var o = 1; o < number2; o++) {
+						var numberTrue = numberTrue * number1;
+					};
+				} else {
+					console.log(number1+" * "+number1+" ="+number1*number1 );
+					var numberTrue = number1 * number1;
+				};
+			} else { 
+				if (numberLog === "+") {
+					var numberTrue = number1 + number2;
+					console.log(number1 + number2);
+				} else if (numberLog === "-"){
+					var numberTrue = number1 - number2;
+					console.log(number1 - number2);
+				} else if (numberLog === "*") {
+					var numberTrue = number1 * number2;
+					console.log(number1 * number2);
+				} else if (numberLog === "/") {
+					var numberTrue = number1 / number2;
+					console.log(number1 / number2);	
+				} else {
+					var numberTrue = "ERROR"; 
+				};
+			};
+			$("#answer").text(numberFull + "=" + numberTrue);
+			if(numberLog !== "&"){
+				console.log(number1 + " " + numberLog + " " + number2 + " = " + numberTrue);
+			};
+			};
+		});
+	</script>
+</body>
+</html>
