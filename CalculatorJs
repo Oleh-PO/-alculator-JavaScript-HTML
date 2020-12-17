@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>КАЛкулятор</title>
+	<meta charset="utf-8">
+	<title>output</title>
 </head>
-
 <body>
-	<h1 id = "heading">Калкулятор</h1>
+ 	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+ 	<form id="form" onsubmit="return false;">
+    <input  style="position:absolute; top:15%; left:5%; width:41%;" type="submit" onclick="othername();" />
+    <input style="position:absolute; top:10%; left:5%; width:40%;" type="text" id="userInput" />
+    <h1 id="answer" style="position:absolute;  left:5%;">0</h1>
+	</form>
 	<script>
-		for (var i = 1; i > 0; i--){ //Перезапуск
-			var numberFull = prompt("number"); 
-			while (numberFull === null){ // Перевірка на нажаття "скасувати"
-				var numberFull = prompt("number");
-			};
-			for (var j = 0; j < numberFull.length; j++){ // Роспізнання знауів: "+", "-", "*", "/", "& (квадрат числа)"
+ 		var numberFull = "";
+		function othername() {
+    		var numberFull = document.getElementById("userInput").value;
+   			var numberMeny = "";
+				for (var j = 0; j < numberFull.length; j++){ // Роспізнання знауів: "+", "-", "*", "/", "& (квадрат числа)"
 				if (numberFull[j] === "+") {
 					var numberLog = "+";
 					var q = j;
@@ -39,7 +43,7 @@
 					};
 				};
 			};
-						var number1 = "";
+			var number1 = "";
 			console.log(numberLog);
 			for (var n = 0; n < q; n++) { // Розпізнання першого доданка
 				var wordTrue = number1 + numberFull[n];
@@ -58,44 +62,36 @@
 			} else if (negnumber1 === "-") {
 				var number1 = "-"  + number1;
 			};
-			var answer = number1;
+			var numberTrue = number1;
 			var number2 = +number2;
 			var number1 = +number1;
 			if (numberLog === "&"){ // Виконування дії
 				if(number2 > 0){
 					for (var o = 1; o < number2; o++) {
-						var answer = answer * number1;
+						var numberTrue = numberTrue * number1;
 					};
-					alert(answer);
 				} else {
 					console.log(number1+" * "+number1+" ="+number1*number1 );
-					alert(number1*number1);
+					var numberTrue = number1 * number1;
 				};
 			} else { 
 				if (numberLog === "+") {
 					var numberTrue = number1 + number2;
-					alert(numberTrue);
 					console.log(number1 + number2);
 				} else if (numberLog === "-"){
 					var numberTrue = number1 - number2;
-					alert(numberTrue);
 					console.log(number1 - number2);
 				} else if (numberLog === "*") {
 					var numberTrue = number1 * number2;
-					alert(numberTrue);
 					console.log(number1 * number2);
 				} else if (numberLog === "/") {
 					var numberTrue = number1 / number2;
-					alert(numberTrue);
 					console.log(number1 / number2);	
 				} else {
-					alert("ERROR");
+					var numberTrue = "ERROR"; 
 				};
 			};
-			var restart = confirm("restart?");
-				if(restart){
-					i++;
-				};
+			$("#answer").text(numberFull + "=" + numberTrue);
 			if(numberLog !== "&"){
 				console.log(number1 + " " + numberLog + " " + number2 + " = " + numberTrue);
 			};
