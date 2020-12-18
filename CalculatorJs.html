@@ -8,18 +8,30 @@
  	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
  	<form id="form" onsubmit="return false;">
     <input  style="position:absolute; top:15%; left:5%; width:41%;" type="submit" onclick="othername();" />
-    <input style="position:absolute; top:10%; left:5%; width:40%;" type="text" id="userInput" />
+    <input style="position:absolute; top:10%; left:5%; width:40%;" type="text" id="userInput"  oninput="change();"/>
     <h1 id="answer" style="position:absolute;  left:5%;">0</h1>
 	</form>
 	<script>
  		var numberFull = "";
+ 		function change(){
+ 			var numberFull = document.getElementById("userInput").value;
+ 			$("#answer").text(numberFull);
+ 		};
 		function othername() {
+			var numberLog1 = 0;
+			var tre = 0;
     		var numberFull = document.getElementById("userInput").value;
    			var numberMeny = "";
-				for (var j = 0; j < numberFull.length; j++){ // Роспізнання знауів: "+", "-", "*", "/", "& (квадрат числа)"
+			for (var j = 0; j < numberFull.length; j++){ // Роспізнання знауів: "+", "-", "*", "/", "& (квадрат числа)"
 				if (numberFull[j] === "+") {
-					var numberLog = "+";
-					var q = j;
+					if(tre < 1){
+						var numberLog = "+";
+						var q = j;
+					} else {
+						var numberLog1 = "+";
+						var q1 = j;
+					};
+					tre++;
 				} else if (numberFull[j] === "-") {
 					var numberLog = "-";
 					var q = j;
@@ -44,18 +56,31 @@
 				};
 			};
 			var number1 = "";
-			console.log(numberLog);
 			for (var n = 0; n < q; n++) { // Розпізнання першого доданка
 				var wordTrue = number1 + numberFull[n];
 				var number1 = wordTrue;
-				console.log(number1);
 			};
 			q++;
 			var number2 = "";
-			for (var n = q; n < numberFull.length; n++) { // Розпізнання другого доданка
-				var wordTrue2 = number2 + numberFull[n];
-				var number2 = wordTrue2;
-				console.log(number2);
+			if(numberLog1 === 0){
+				for (var n = q; n < numberFull.length; n++) { // Розпізнання другого доданка
+					var wordTrue2 = number2 + numberFull[n];
+					var number2 = wordTrue2;
+				};
+			alert("2");
+			} else {
+				for (var n = q; n < q1; n++) { // Розпізнання другого доданка
+					var wordTrue2 = number2 + numberFull[n];
+					var number2 = wordTrue2;
+				};
+			};
+			if (numberLog1 !== 0) {
+				q1++;
+				var number3 = "";
+				for (var n = q1; n < numberFull.length; n++) { // Розпізнання третього доданка
+					var wordTrue3 = number3 + numberFull[n];
+					var number3 = wordTrue3;
+				};
 			};
 			if (negnumber1 === "-") {
 				var number1 = "-"  + number1;
@@ -63,6 +88,7 @@
 				var number1 = "-"  + number1;
 			};
 			var numberTrue = number1;
+			var number3 = +number3;
 			var number2 = +number2;
 			var number1 = +number1;
 			if (numberLog === "&"){ // Виконування дії
@@ -71,29 +97,36 @@
 						var numberTrue = numberTrue * number1;
 					};
 				} else {
-					console.log(number1+" * "+number1+" ="+number1*number1 );
 					var numberTrue = number1 * number1;
 				};
 			} else { 
 				if (numberLog === "+") {
 					var numberTrue = number1 + number2;
-					console.log(number1 + number2);
 				} else if (numberLog === "-"){
 					var numberTrue = number1 - number2;
-					console.log(number1 - number2);
 				} else if (numberLog === "*") {
 					var numberTrue = number1 * number2;
-					console.log(number1 * number2);
 				} else if (numberLog === "/") {
 					var numberTrue = number1 / number2;
-					console.log(number1 / number2);	
 				} else {
 					var numberTrue = "ERROR"; 
 				};
 			};
-			$("#answer").text(numberFull + "=" + numberTrue);
-			if(numberLog !== "&"){
-				console.log(number1 + " " + numberLog + " " + number2 + " = " + numberTrue);
+			if (numberLog1 !== 0) {
+				if (numberLog1 === "+") {
+					var numberTrue1 = numberTrue + number3;
+				} else if (numberLog1=== "-"){
+					var numberTrue1 = numberTrue - number3;
+				} else if (numberLog1 === "*") {
+					var numberTrue1 = numberTrue * number3;
+				} else if (numberLog1 === "/") {
+					var numberTrue1 = numberTrue1 / number3;
+				} else {
+					var numberTrue1 = "ERROR"; 
+				};
+				$("#answer").text(numberFull + "=" + numberTrue1);
+			} else {
+				$("#answer").text(numberFull + "=" + numberTrue);
 			};
 		};
 	</script>
