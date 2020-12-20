@@ -15,10 +15,15 @@
  		var numberFull = "";
  		function change(){
  			var numberFull = document.getElementById("userInput").value;
- 			$("#answer").text(numberFull);
+ 			if(numberFull.length === 0){
+ 				$("#answer").text(0);
+ 			} else {
+ 				$("#answer").text(numberFull);
+ 			}
  		};
 		function othername() {
 			var numberLog1 = 0;
+			var f = "";
 			var tre = 0;
     		var numberFull = document.getElementById("userInput").value;
    			var numberMeny = "";
@@ -28,22 +33,41 @@
 						var numberLog = "+";
 						var q = j;
 					} else {
-						var numberLog1 = "+";
 						var q1 = j;
 					};
 					tre++;
 				} else if (numberFull[j] === "-") {
-					var numberLog = "-";
-					var q = j;
+					if(tre < 1){
+						var numberLog = "-";
+						var q = j;
+					} else {
+						var q1 = j;
+					};
+					tre++;
 				} else if (numberFull[j] === "*") {
-					var numberLog = "*";
-					var q = j;
+					if(tre < 1){
+						var numberLog = "*";
+						var q = j;
+					} else {
+						var q1 = j;
+					};
+					tre++;
 				} else if (numberFull[j] === "/") {
-					var numberLog = "/";
-					var q = j;
+					if(tre < 1){
+						var numberLog = "/";
+						var q = j;
+					} else {
+						var q1 = j;
+					};
+					tre++;
 				} else if (numberFull[j] === "&"){
-					var numberLog = "&";
-					var q = j;
+					if(tre < 1){
+						var numberLog = "&";
+						var q = j;
+					} else {
+						var q1 = j;
+					};
+					tre++;
 				};
 				if (j === 0){
 					if(numberFull[0] === "-"){
@@ -54,6 +78,9 @@
 						var negnumber2 = "-";
 					};
 				};
+			};
+			if (tre > 1) {
+				var numberLog1 = numberFull[q1];
 			};
 			var number1 = "";
 			for (var n = 0; n < q; n++) { // Розпізнання першого доданка
@@ -67,7 +94,6 @@
 					var wordTrue2 = number2 + numberFull[n];
 					var number2 = wordTrue2;
 				};
-			alert("2");
 			} else {
 				for (var n = q; n < q1; n++) { // Розпізнання другого доданка
 					var wordTrue2 = number2 + numberFull[n];
@@ -87,7 +113,7 @@
 			} else if (negnumber1 === "-") {
 				var number1 = "-"  + number1;
 			};
-			var numberTrue = number1;
+			var numberTrue = number1; // Перехід з розпізнання до виконання дії
 			var number3 = +number3;
 			var number2 = +number2;
 			var number1 = +number1;
@@ -109,20 +135,84 @@
 				} else if (numberLog === "/") {
 					var numberTrue = number1 / number2;
 				} else {
-					var numberTrue = "ERROR"; 
+					var numberTrue = "ERROR";
 				};
 			};
 			if (numberLog1 !== 0) {
-				if (numberLog1 === "+") {
-					var numberTrue1 = numberTrue + number3;
-				} else if (numberLog1=== "-"){
-					var numberTrue1 = numberTrue - number3;
-				} else if (numberLog1 === "*") {
-					var numberTrue1 = numberTrue * number3;
-				} else if (numberLog1 === "/") {
-					var numberTrue1 = numberTrue1 / number3;
+				if (numberLog1 === "&") {
+					if(number3 > 0){
+						var numberTrue = number2;
+						for (var o = 1; o < number3; o++) {
+							var numberTrue = numberTrue * number2;
+						};
+						alert("OK1");
+					} else {
+						var numberTrue = number2 * number2;
+						alert("OK2");
+					};
+					if (numberLog === "+") {
+						var numberTrue1 = number1 + numberTrue ;
+					} else if (numberLog === "-"){
+						var numberTrue1 = number1 - numberTrue ;
+					} else if (numberLog === "*") {
+						var numberTrue1 = number1 * numberTrue ;
+					} else if (numberLog === "/") {
+						var numberTrue1 = number1 / numberTrue ;
+					} else {
+						var numberTrue1 = "ERROR";
+					};
+				} else if (numberLog1 === "/" || numberLog1 === "*") {
+					if (numberLog !== "/" && numberLog !== "*") {
+						if (numberLog1 === "*") {
+							if (numberLog === "+") {
+								var numberTrue1 = number2 * number3 + number1;
+							} else if (numberLog === "-"){
+								var numberTrue1 = number1 - number2 * number3;
+							} else if (numberLog === "*") {
+								var numberTrue1 = number2 * number3 * number1;
+							} else if (numberLog === "/") {
+								var numberTrue1 = number2 * number3 / number1;
+							} else {
+								var numberTrue1 = "ERROR";
+							};
+						} else {
+							if (numberLog === "+") {
+								var numberTrue1 = number2 / number3 + number1;
+							} else if (numberLog === "-"){
+								var numberTrue1 = number1 - number2 / number3;
+							} else if (numberLog === "*") {
+								var numberTrue1 = number2 / number3 * number1;
+							} else if (numberLog === "/") {
+								var numberTrue1 = number2 / number3 / number1;
+							} else {
+								var numberTrue1 = "ERROR";
+							};
+						};
+					} else {
+						if (numberLog1 === "+") {
+							var numberTrue1 = numberTrue + number3;
+						} else if (numberLog1 === "-"){
+							var numberTrue1 = numberTrue - number3;
+						} else if (numberLog1 === "*") {
+							var numberTrue1 = numberTrue * number3;
+						} else if (numberLog1 === "/") {
+							var numberTrue1 = numberTrue / number3;
+						} else {
+							var numberTrue1 = "ERROR";
+						};
+					};
 				} else {
-					var numberTrue1 = "ERROR"; 
+					if (numberLog1 === "+") {
+						var numberTrue1 = numberTrue + number3;
+					} else if (numberLog1 === "-"){
+						var numberTrue1 = numberTrue - number3;
+					} else if (numberLog1 === "*") {
+						var numberTrue1 = numberTrue * number3;
+					} else if (numberLog1 === "/") {
+						var numberTrue1 = numberTrue / number3;
+					} else {
+						var numberTrue1 = "ERROR";
+					};
 				};
 				$("#answer").text(numberFull + "=" + numberTrue1);
 			} else {
